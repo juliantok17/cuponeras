@@ -18,6 +18,7 @@ public class Producto {
     private Double precioProducto;
     private String descripcionProducto;
     private Date fechaPublicacionProducto;
+    private String imagenProducto;
     /**
      * @return the idProducto
      */
@@ -100,6 +101,20 @@ public class Producto {
      */
     public void setDescripcionProducto(String descripcionProducto) {
         this.descripcionProducto = descripcionProducto;
+    }
+
+    /**
+     * @return the imagenProducto
+     */
+    public String getImagenProducto() {
+        return imagenProducto;
+    }
+
+    /**
+     * @param imagenProducto the imagenProducto to set
+     */
+    public void setImagenProducto(String imagenProducto) {
+        this.imagenProducto = imagenProducto;
     }
     
 }

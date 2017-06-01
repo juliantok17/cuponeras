@@ -24,8 +24,9 @@
         
         <script type="text/template" id="templateProductos">
             {{#listaProductos}}
-                <article id='prod_{{idProducto}}' class="content_producto">
-                    <h3 class="titulo">{{nombreProducto}}</h3>    
+                <article id="prod_{{idProducto}}" class="content_producto">
+                    <h3 class="titulo">{{nombreProducto}}</h3>  
+                    <img src="{{imagenProducto}}">    
                     <p class="descripcion">Descripción: {{descripcionProducto}}</p>
                     <p class="precio">Precio: {{precioProducto}}</p>
                 </article>
