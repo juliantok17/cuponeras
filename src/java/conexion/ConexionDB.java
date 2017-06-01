@@ -16,11 +16,11 @@ import java.sql.SQLException;
 public class ConexionDB {
     private static ConexionDB INSTANCE = null;
     
-    private static String DRIVER = "com.mysql.jdbc.Driver";
-    private static String DB = "cuponeras";
-    private static String URL = "jdbc:mysql://localhost/" + DB;
-    private static String USUARIO = "root";
-    private static String PASSWORD = "mint";
+    private static final String DRIVER = "com.mysql.jdbc.Driver";
+    private static final String DB = "cuponeras";
+    private static final String URL = "jdbc:mysql://localhost/" + DB;
+    private static final String USUARIO = "root";
+    private static final String PASSWORD = "mint";
 
     Connection con = null;
     
@@ -39,8 +39,6 @@ public class ConexionDB {
     public Connection getConnection() throws InstantiationException, ClassNotFoundException, IllegalAccessException, SQLException {
         Class.forName(DRIVER);
         con = DriverManager.getConnection(URL, USUARIO, PASSWORD);
-//        con.
-       // con.rollback();
         return con;
     }
 

@@ -37,9 +37,9 @@ public class CategoriaDAO {
     private final static String SQL_PRODUCTOS_X_CATEGORIA_SELECT = 
             "SELECT p.pro_id, p.pro_nom, p.pro_pre, p.pro_des, c.cat_nom, e.emp_nom, p.pro_fecha_pub "
           + "FROM productos AS p, categorias AS c, empresas AS e,productos_categorias AS pc "
-          + "WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp;";
+          + "WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp AND c.cat_id = ?;";
 
-    public ArrayList<Producto> getAllProductos() throws ClassNotFoundException, IOException, SQLException, InstantiationException, IllegalAccessException {
+    public ArrayList<Producto> getProductosPorCategoria(int id) throws ClassNotFoundException, IOException, SQLException, InstantiationException, IllegalAccessException {
         ArrayList<Producto> productoList = new ArrayList();
         Connection conn = null;
         PreparedStatement ptsmt = null;
@@ -48,6 +48,7 @@ public class CategoriaDAO {
         try {
             conn = ConexionDB.getInstance().getConnection();
             ptsmt = conn.prepareStatement(SQL_PRODUCTOS_X_CATEGORIA_SELECT);
+            ptsmt.setInt(1, id);
             rs = ptsmt.executeQuery();
             Producto elProducto = null;
             while (rs.next()) { 
