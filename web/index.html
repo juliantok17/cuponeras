@@ -2,24 +2,35 @@
 
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <title>Cuponeras</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/style.css">
     </head>
     <body>
         <label for="categoria">Categorías:</label>
-        
+
         <select id="verCategorias">
         </select> 
-        
+
         <input type="submit" onclick="CATEGORIA.porId();" value="Enviar"> <br>
-        
-        <div id="resultado"></div>
+
+        <section id="resultado"></section>
         <script type="text/template" id="templateCategorias">            
             {{#listaCategorias}}
             <option value='{{idCategoria}}'>{{nombreCategoria}}</option>
             {{/listaCategorias}}          
         </script>
+        
+        <script type="text/template" id="templateProductos">
+            {{#listaProductos}}
+                <article id='prod_{{idProducto}}' class="content_producto">
+                    <h3 class="titulo">{{nombreProducto}}</h3>    
+                    <p class="descripcion">Descripción: {{descripcionProducto}}</p>
+                    <p class="precio">Precio: {{precioProducto}}</p>
+                </article>
+            {{/listaProductos}}
+        </script>        
         
         <script src="js/cuponeras.js" type="text/javascript"></script> 
         <script src="js/mustache.js" type="text/javascript"></script> 

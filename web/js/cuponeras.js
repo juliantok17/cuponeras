@@ -8,9 +8,9 @@ CATEGORIA.desplegar = function () {
         
         if (xhr.readyState == 4 && xhr.status == 200) {
             var templateCategorias = document.querySelector("#templateCategorias").innerHTML;
-            var categorias = {};
-            categorias.listaCategorias = JSON.parse(xhr.responseText);
-            document.querySelector('#verCategorias').innerHTML = Mustache.render(templateCategorias, categorias);
+            var modeloCategorias = {};
+            modeloCategorias.listaCategorias = JSON.parse(xhr.responseText);
+            document.querySelector('#verCategorias').innerHTML = Mustache.render(templateCategorias, modeloCategorias);
         }
         
     };
@@ -26,7 +26,10 @@ CATEGORIA.porId = function(){
     xhr.open('GET', 'ProductoController?id='+categoriaSeleccionada);
     xhr.onreadystatechange = function () {
         if (xhr.readyState == 4 && xhr.status == 200) {
-            document.querySelector('#resultado').innerHTML = xhr.responseText;
+            var templateProductos = document.querySelector("#templateProductos").innerHTML;
+            var modeloProductos = {};
+            modeloProductos.listaProductos = JSON.parse(xhr.responseText);
+            document.querySelector('#resultado').innerHTML = Mustache.render(templateProductos, modeloProductos);
             //var resultado = xhr.responseText;
             
         } else{
