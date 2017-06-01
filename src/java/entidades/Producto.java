@@ -16,6 +16,7 @@ public class Producto {
     private String nombreProducto;
     private String empresaProducto;
     private Double precioProducto;
+    private String descripcionProducto;
     private Date fechaPublicacionProducto;
     /**
      * @return the idProducto
@@ -85,6 +86,20 @@ public class Producto {
      */
     public void setFechaPublicacionProducto(Date fechaPublicacionProducto) {
         this.fechaPublicacionProducto = fechaPublicacionProducto;
+    }
+
+    /**
+     * @return the descripcionProducto
+     */
+    public String getDescripcionProducto() {
+        return descripcionProducto;
+    }
+
+    /**
+     * @param descripcionProducto the descripcionProducto to set
+     */
+    public void setDescripcionProducto(String descripcionProducto) {
+        this.descripcionProducto = descripcionProducto;
     }
     
 }

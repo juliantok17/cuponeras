@@ -17,10 +17,10 @@ public class ConexionDB {
     private static ConexionDB INSTANCE = null;
     
     private static String DRIVER = "com.mysql.jdbc.Driver";
-    private static String DB = "cuponera";
+    private static String DB = "cuponeras";
     private static String URL = "jdbc:mysql://localhost/" + DB;
     private static String USUARIO = "root";
-    private static String PASSWORD = "";
+    private static String PASSWORD = "mint";
 
     Connection con = null;
     

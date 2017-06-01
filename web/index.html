@@ -11,6 +11,19 @@ and open the template in the editor.
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
     </head>
     <body>
-        <div>TODO write content</div>
+        <label for="categoria">Categoría:</label>
+            <select id="verCategorias">
+            </select> 
+        
+        <script type="text/template" id="templateCategorias">
+            
+            {{#listaCategorias}}
+            <option value='{{idCategoria}}'>{{nombreCategoria}}</option>
+            {{/listaCategorias}}   
+            
+            
+        </script>
+        <script src="js/cuponeras.js" type="text/javascript"></script> 
+        <script src="js/mustache.js" type="text/javascript"></script> 
     </body>
 </html>
