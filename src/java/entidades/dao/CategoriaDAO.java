@@ -35,9 +35,9 @@ public class CategoriaDAO {
     }
 
     private final static String SQL_PRODUCTOS_X_CATEGORIA_SELECT = 
-        "SELECT p.pro_id, p.pro_nom, p.pro_pre, p.pro_des, c.cat_nom, e.emp_nom, p.pro_fecha_pub, i.image "
-      + "FROM productos AS p, categorias AS c, empresas AS e,productos_categorias AS pc, imagenes AS i "
-      + "WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp AND i.img_pro_id = p.pro_id AND c.cat_id = ?;";
+        " SELECT p.pro_id, p.pro_nom, p.pro_pre, p.pro_des, c.cat_nom, e.emp_nom, p.pro_fecha_pub, i.image "
+      + " FROM productos AS p, categorias AS c, empresas AS e,productos_categorias AS pc, imagenes AS i "
+      + " WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp AND i.img_pro_id = p.pro_id AND c.cat_id = ?;";
 
     public ArrayList<Producto> getProductosPorCategoria(int id) throws ClassNotFoundException, IOException, SQLException, InstantiationException, IllegalAccessException {
         ArrayList<Producto> productoList = new ArrayList();
