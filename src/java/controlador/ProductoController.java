@@ -34,7 +34,7 @@ public class ProductoController extends HttpServlet {
         try {
             Gson gson = new Gson();
             texto = request.getParameter("id");
-            System.out.println(texto);
+            
             CategoriaDAO proById = CategoriaDAO.getInstance(); // Patron singleton
             out.println(gson.toJson(proById.getProductosPorCategoria(Integer.parseInt(texto))));
         } catch (ClassNotFoundException ex) {

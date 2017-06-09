@@ -1,11 +1,15 @@
 package conexion;
 
-import java.io.FileReader;
+import java.io.File;
+import java.io.FileInputStream;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.util.Properties;
-import java.util.ResourceBundle;
+//import java.util.ResourceBundle;
 import java.util.Vector;
+import org.jasypt.encryption.pbe.PBEStringEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.properties.EncryptableProperties;
 
 /**
  *
@@ -29,30 +33,45 @@ public class ConnectionPool {
     private ConnectionPool() throws ClassNotFoundException {
         try {
             
-            Properties conConfig = new Properties();
-            conConfig.load(new FileReader( "/home/mint/NetBeansProjects/cuponeras/src/java/root/connectionpool.properties" ));
-            //ResourceBundle rb = ResourceBundle.getBundle("connectionpool");
-            //obtengo los parametros de la conexion
-            //url = rb.getString("url");
-            //driver = rb.getString("driver");
-            //usr = rb.getString("usr");
-            //pwd = rb.getString("pwd");
+//            Properties conConfig = new Properties();
+//            conConfig.load(new FileReader( "/home/mint/NetBeansProjects/cuponeras/src/java/root/connectionpool.properties" ));
+
             
+           
+            //Instanciamos el objeto de encriptación y utilizamos
+            //la misma clave interna que utilizamos para encriptarlo.            
+            PBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+            encryptor.setPassword("alabastro1978");
+            
+            /*
+            * Instanciamos un objeto de la clase EncryptableProperties de Jasypt,
+            * que extiende de Properties. Esta clase permite leer las propiedades
+            * encriptadas, ya que utiliza el encriptador para desencriptarlas
+            * y devolvernos el valor en claro.
+            */
+            Properties conConfig = new EncryptableProperties(encryptor);
+            
+            
+            conConfig.load(new FileInputStream("/home/mint/NetBeansProjects/cuponeras/src/java/root/pool.properties"));               
+            
+            
+            //obtengo los parametros de la conexion           
             url = conConfig.getProperty("url");
             driver = conConfig.getProperty("driver");
             usr = conConfig.getProperty("usr");
-            pwd = conConfig.getProperty("pwd");
+            pwd = conConfig.getProperty("pwd"); //obtenemos el valor desencriptado        
+            
             
             // levanto el driver
-            Class.forName(driver);
+            Class.forName(driver);         
+            
             
             // obtengo los parametros del pool
             minsize = Integer.parseInt(conConfig.getProperty("minsize"));
             maxsize = Integer.parseInt(conConfig.getProperty("maxsize"));
             steep = Integer.parseInt(conConfig.getProperty("steep"));
             libres = new Vector<Connection>();
-            usadas = new Vector<Connection>();
-            System.out.println(maxsize);
+            usadas = new Vector<Connection>();            
             
             // instancio las primeras n conexiones
             _instanciar(minsize);

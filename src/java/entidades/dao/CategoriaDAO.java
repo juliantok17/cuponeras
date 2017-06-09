@@ -41,7 +41,7 @@ public class CategoriaDAO {
         ResultSet rs = null;
 
         try {
-            con = ConnectionPool.getPool().getConnection();
+            con = ConnectionPool.getPool().getConnection();            
             ptsmt = con.prepareStatement(SQL_PRODUCTOS_X_CATEGORIA_SELECT);
             ptsmt.setInt(1, id);
             rs = ptsmt.executeQuery();
@@ -93,6 +93,7 @@ public class CategoriaDAO {
 
         try {
             con = ConnectionPool.getPool().getConnection();
+            System.out.println(ConnectionPool.getPool());
             ptsmt = con.prepareStatement(SQL_CATEGORIA_SELECT);
             rs = ptsmt.executeQuery();
             Categoria laCategoria = null;
