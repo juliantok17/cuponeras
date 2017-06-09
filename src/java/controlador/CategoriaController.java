@@ -36,6 +36,7 @@ public class CategoriaController extends HttpServlet {
         try {
             Gson gson = new Gson();
             CategoriaDAO allCategorias = CategoriaDAO.getInstance(); 
+            
             out.println(gson.toJson(allCategorias.getAllCategorias()));
         } catch (ClassNotFoundException ex) {
             out.println("" + ex.getMessage());

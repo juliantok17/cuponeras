@@ -1,11 +1,6 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entidades.dao;
 
-import conexion.ConexionDB;
+import conexion.ConnectionPool;
 import entidades.Categoria;
 import entidades.Producto;
 import java.io.IOException;
@@ -34,91 +29,102 @@ public class CategoriaDAO {
         return INSTANCE;
     }
 
-    private final static String SQL_PRODUCTOS_X_CATEGORIA_SELECT = 
-        " SELECT p.pro_id, p.pro_nom, p.pro_pre, p.pro_des, c.cat_nom, e.emp_nom, p.pro_fecha_pub, i.image "
-      + " FROM productos AS p, categorias AS c, empresas AS e,productos_categorias AS pc, imagenes AS i "
-      + " WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp AND i.img_pro_id = p.pro_id AND c.cat_id = ?;";
+    private final static String SQL_PRODUCTOS_X_CATEGORIA_SELECT
+            = " SELECT p.pro_id, p.pro_nom, p.pro_pre, p.pro_des, c.cat_nom, e.emp_nom, p.pro_fecha_pub, i.image "
+            + " FROM productos AS p, categorias AS c, empresas AS e,productos_categorias AS pc, imagenes AS i "
+            + " WHERE p.pro_id = pc.id_pro AND c.cat_id = pc.id_cat AND e.emp_id = p.pro_emp AND i.img_pro_id = p.pro_id AND c.cat_id = ?;";
 
     public ArrayList<Producto> getProductosPorCategoria(int id) throws ClassNotFoundException, IOException, SQLException, InstantiationException, IllegalAccessException {
         ArrayList<Producto> productoList = new ArrayList();
-        Connection conn = null;
+        Connection con = null;
         PreparedStatement ptsmt = null;
         ResultSet rs = null;
-        
+
         try {
-            conn = ConexionDB.getInstance().getConnection();
-            ptsmt = conn.prepareStatement(SQL_PRODUCTOS_X_CATEGORIA_SELECT);
+            con = ConnectionPool.getPool().getConnection();
+            ptsmt = con.prepareStatement(SQL_PRODUCTOS_X_CATEGORIA_SELECT);
             ptsmt.setInt(1, id);
             rs = ptsmt.executeQuery();
             Producto elProducto = null;
-            while (rs.next()) { 
-                try{
+            while (rs.next()) {
+                try {
                     elProducto = new Producto();
-                    elProducto.setIdProducto(rs.getInt("pro_id"));                
-                    elProducto.setNombreProducto(rs.getString("pro_nom"));                    
-                    elProducto.setPrecioProducto(rs.getDouble("pro_pre"));                
-                    elProducto.setFechaPublicacionProducto(rs.getDate("pro_fecha_pub")); 
+                    elProducto.setIdProducto(rs.getInt("pro_id"));
+                    elProducto.setNombreProducto(rs.getString("pro_nom"));
+                    elProducto.setPrecioProducto(rs.getDouble("pro_pre"));
+                    elProducto.setFechaPublicacionProducto(rs.getDate("pro_fecha_pub"));
                     elProducto.setDescripcionProducto(rs.getString("pro_des"));
                     elProducto.setEmpresaProducto(rs.getString("emp_nom"));
                     elProducto.setImagenProducto(rs.getString("image"));
-                    
-                }catch (Exception ex) {
+
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 productoList.add(elProducto);
-            }         
-                     
-        }finally {
+            }
+
+        } finally {
             try {
-                rs.close();
+                if (rs != null) {
+                    rs.close();
+                }
             } finally {
                 try {
-                    ptsmt.close();
+                    if (ptsmt != null) {
+                        ptsmt.close();
+                    }
                 } finally {
-                    conn.close();
+                    if (con != null) {
+                        ConnectionPool.getPool().releaseConnection(con);
+                    }
                 }
             }
         }
-       return productoList;
+        return productoList;
     }
-    
+
     private final static String SQL_CATEGORIA_SELECT = "select * from categorias;";
-    
+
     public ArrayList<Categoria> getAllCategorias() throws ClassNotFoundException, IOException, SQLException, InstantiationException, IllegalAccessException {
         ArrayList<Categoria> categoriaList = new ArrayList();
-        Connection conn = null;
+        Connection con = null;
         PreparedStatement ptsmt = null;
         ResultSet rs = null;
-        
+
         try {
-            conn = ConexionDB.getInstance().getConnection();
-            ptsmt = conn.prepareStatement(SQL_CATEGORIA_SELECT);
+            con = ConnectionPool.getPool().getConnection();
+            ptsmt = con.prepareStatement(SQL_CATEGORIA_SELECT);
             rs = ptsmt.executeQuery();
             Categoria laCategoria = null;
-            while (rs.next()) { 
-                try{
+            while (rs.next()) {
+                try {
                     laCategoria = new Categoria();
-                    laCategoria.setIdCategoria(rs.getInt("cat_id"));                
-                    laCategoria.setNombreCategoria(rs.getString("cat_nom"));                   
-                    
-                }catch (Exception ex) {
+                    laCategoria.setIdCategoria(rs.getInt("cat_id"));
+                    laCategoria.setNombreCategoria(rs.getString("cat_nom"));
+
+                } catch (Exception ex) {
                     ex.printStackTrace();
                 }
                 categoriaList.add(laCategoria);
-            }         
-                     
-        }finally {
+            }
+        } finally {
             try {
-                rs.close();
+                if (rs != null) {
+                    rs.close();
+                }
             } finally {
                 try {
-                    ptsmt.close();
+                    if (ptsmt != null) {
+                        ptsmt.close();
+                    }
                 } finally {
-                    conn.close();
+                    if (con != null) {
+                        ConnectionPool.getPool().releaseConnection(con);
+                    }
                 }
             }
         }
-       return categoriaList;
+        return categoriaList;
     }
-    
+
 }
